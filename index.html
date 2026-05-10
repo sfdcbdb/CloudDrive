@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudDrive for SharePoint - Salesforce Document Management</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      color: #1a1a1a;
+      line-height: 1.6;
+      background: #ffffff;
+    }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    
+    section { padding: 4rem 0; border-bottom: 1px solid #e5e5e5; }
+    section:last-child { border-bottom: none; }
+    
+    h1 { font-size: 42px; font-weight: 500; line-height: 1.2; margin-bottom: 1rem; }
+    h2 { font-size: 28px; font-weight: 500; margin-bottom: 1.5rem; text-align: center; }
+    h3 { font-size: 18px; font-weight: 500; margin-bottom: 0.75rem; }
+    
+    p { color: #666; margin-bottom: 1rem; line-height: 1.7; }
+    
+    .hero { background: #f9f9f9; text-align: center; padding: 5rem 0; }
+    .hero h1 { color: #1a1a1a; margin-bottom: 1.5rem; }
+    .hero p { font-size: 18px; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    
+    .cta-btn {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    
+    .cta-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .problem-section { background: transparent; }
+    
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .comparison-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    .comparison-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    
+    .bad { color: #e53e3e; }
+    .good { color: #22863a; }
+    
+    .comparison-card ul {
+      list-style: none;
+      font-size: 13px;
+    }
+    
+    .comparison-card li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    .file-modified {
+      color: #666;
+      font-size: 12px;
+    }
+    
+    .file-size {
+      color: #666;
+      font-size: 12px;
+      text-align: right;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    .feature-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-card p {
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+    
+    .roi-calculator {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .calc-row {
+      margin-bottom: 1.5rem;
+    }
+    
+    .calc-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+    }
+    
+    .calc-row input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    
+    .calc-result {
+      background: #e6f1fb;
+      border: 1px solid #85b7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .calc-result-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    
+    .calc-result-value {
+      font-size: 24px;
+      font-weight: 500;
+      color: #0c447c;
+    }
+    
+    .beta-section {
+      background: #f9f9f9;
+      text-align: center;
+      padding: 4rem 0;
+    }
+    
+    .beta-form {
+      max-width: 400px;
+      margin: 2rem auto 0;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    
+    .beta-form input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+    
+    .beta-form button {
+      width: 100%;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .beta-form button:hover {
+      opacity: 0.9;
+    }
+    
+    .beta-hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 1rem;
+    }
+    
+    .footer {
+      background: #f9f9f9;
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .stat-box {
+      background: #e6f1fb;
+      color: #0c447c;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      margin-top: 0.5rem;
+    }
+    
+    .success-message {
+      display: none;
+      background: #f0f9ff;
+      border: 1px solid #22863a;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      color: #22863a;
+      text-align: center;
+    }
+    
+    @media (max-width: 700px) {
+      .comparison { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="container">
+    <h1>CloudDrive for SharePoint</h1>
+    <p>Stop overpaying for Salesforce File Storage. Keep documents on SharePoint, access them in Salesforce, leverage Agentforce to manage them.</p>
+    <button class="cta-btn" onclick="document.querySelector('.beta-section').scrollIntoView({behavior:'smooth'})">
+      Request Beta Access →
+    </button>
+  </div>
+</section>
+
+<section class="problem-section">
+  <div class="container">
+    <h2>The problem: Salesforce Files ≠ Cloud Storage</h2>
+    <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+      You're bleeding money on Salesforce File Storage and your IT team hates that documents live in two places.
+    </p>
+    
+    <div class="comparison">
+      <div class="comparison-card">
+        <h3 class="bad">✗ Without CloudDrive</h3>
+        <ul>
+          <li><span class="bad">✗</span> Files copy themselves into Salesforce</li>
+          <li><span class="bad">✗</span> Extra €5,000–15,000 File Storage bills</li>
+          <li><span class="bad">✗</span> Data lives in two places (compliance risk)</li>
+          <li><span class="bad">✗</span> Files Connect is too expensive or complex</li>
+          <li><span class="bad">✗</span> Agents can't organize documents automatically</li>
+        </ul>
+      </div>
+      
+      <div class="comparison-card">
+        <h3 class="good">✓ With CloudDrive</h3>
+        <ul>
+          <li><span class="good">✓</span> Drag & drop to SharePoint, zero Salesforce storage</li>
+          <li><span class="good">✓</span> Save €5,000–15,000/year</li>
+          <li><span class="good">✓</span> Single source of truth (SharePoint)</li>
+          <li><span class="good">✓</span> 5-minute setup, zero complexity</li>
+          <li><span class="good">✓</span> Agentforce automates folder organization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>How it works</h2>
+    <p style="text-align: center; margin-bottom: 2rem;">
+      Instead of files living in Salesforce, they live on your company's SharePoint. CloudDrive is the bridge.
+    </p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>☁️ Drag & Drop Upload</h3>
+        <p>Users drag files directly to SharePoint. Salesforce only stores the link.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>📁 Auto Folder Structure</h3>
+        <p>Folders auto-create on SharePoint based on record type: Account → Opportunity → Documents.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🤖 Agentforce Actions</h3>
+        <p>Tell your agent: "Organize invoices into the customer folder." It does it automatically.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🔗 One-Click Links</h3>
+        <p>Files show in Salesforce. Click = opens in SharePoint. No download needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Your ROI: How much can you save?</h2>
+    <p style="text-align: center; margin-bottom: 2rem;">
+      Use the calculator below. Typical savings: €4,000–12,000 per year.
+    </p>
+    
+    <div class="roi-calculator">
+      <div class="calc-row">
+        <label>How many users in Salesforce?</label>
+        <input type="number" id="users" value="500" min="10" max="10000" step="10">
+      </div>
+      
+      <div class="calc-row">
+        <label>Avg. GB per user per year?</label>
+        <input type="number" id="gb-per-user" value="5" min="1" max="100" step="0.5">
+      </div>
+      
+      <div class="calc-row">
+        <label>Salesforce storage cost/GB/year (€)</label>
+        <input type="number" id="cost-per-gb" value="8" min="1" max="50" step="0.5">
+      </div>
+      
+      <div class="calc-result">
+        <div class="calc-result-label">Annual savings with CloudDrive</div>
+        <div class="calc-result-value" id="savings">€20,000</div>
+      </div>
+      
+      <div class="stat-box">
+        <div class="stat-number" id="payback">2.4 months</div>
+        <div class="stat-label">ROI payback period</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="beta-section">
+  <div class="container">
+    <h2>Ready to cut storage costs?</h2>
+    <p>Join the beta. We'll set you up, handle the integration, and you'll see savings within the first month.</p>
+    
+    <div class="beta-form">
+      <div class="success-message" id="successMessage">
+        ✓ Thanks! We'll send you beta access details to your email.
+      </div>
+      <input type="text" id="beta-name" placeholder="Your name">
+      <input type="email" id="beta-email" placeholder="Work email">
+      <input type="text" id="beta-company" placeholder="Company name">
+      <button onclick="submitBeta()">
+        📧 Get Early Access
+      </button>
+      <div class="beta-hint">
+        We'll send you a demo link and beta access code. No credit card needed.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="footer">
+  <div class="container">
+    <p style="margin-bottom: 0.5rem;">CloudDrive for SharePoint — A Salesforce AppExchange Solution</p>
+    <p style="margin-bottom: 0;">Built for modern enterprises. Privacy-first. GDPR compliant.</p>
+  </div>
+</section>
+
+<script>
+  function calculateROI() {
+    const users = parseInt(document.getElementById('users').value) || 500;
+    const gbPerUser = parseFloat(document.getElementById('gb-per-user').value) || 5;
+    const costPerGB = parseFloat(document.getElementById('cost-per-gb').value) || 8;
+    
+    const totalGB = users * gbPerUser;
+    const annualCost = totalGB * costPerGB;
+    const appCost = 2000;
+    const netSavings = annualCost - appCost;
+    const paybackMonths = (appCost / (annualCost / 12)).toFixed(1);
+    
+    document.getElementById('savings').textContent = '€' + Math.round(netSavings).toLocaleString();
+    document.getElementById('payback').textContent = paybackMonths + ' months';
+  }
+  
+  document.getElementById('users').addEventListener('input', calculateROI);
+  document.getElementById('gb-per-user').addEventListener('input', calculateROI);
+  document.getElementById('cost-per-gb').addEventListener('input', calculateROI);
+  
+  function submitBeta() {
+    const name = document.getElementById('beta-name').value;
+    const email = document.getElementById('beta-email').value;
+    const company = document.getElementById('beta-company').value;
+    
+    if (!name || !email || !company) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    console.log('Beta signup:', { name, email, company });
+    
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+    
+    document.getElementById('beta-name').value = '';
+    document.getElementById('beta-email').value = '';
+    document.getElementById('beta-company').value = '';
+    
+    setTimeout(() => {
+      successMessage.style.display = 'none';
+    }, 5000);
+  }
+  
+  calculateROI();
+</script>
+
+</body>
+</html>
