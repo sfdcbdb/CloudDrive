@@ -1,137 +1,344 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudDrive for SharePoint - Salesforce Document Management</title>
+  <title>CloudDrive for SharePoint | Salesforce Storage Optimization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Sohne:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      color: #1a1a1a;
-      line-height: 1.6;
-      background: #ffffff;
+    
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --border: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --bg-light: #f8fafc;
+      --bg-white: #ffffff;
     }
     
-    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    body {
+      font-family: 'Sohne', -apple-system, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-white);
+      line-height: 1.6;
+    }
     
-    section { padding: 4rem 0; border-bottom: 1px solid #e5e5e5; }
-    section:last-child { border-bottom: none; }
+    a { color: inherit; text-decoration: none; }
     
-    h1 { font-size: 42px; font-weight: 500; line-height: 1.2; margin-bottom: 1rem; }
-    h2 { font-size: 28px; font-weight: 500; margin-bottom: 1.5rem; text-align: center; }
-    h3 { font-size: 18px; font-weight: 500; margin-bottom: 0.75rem; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
     
-    p { color: #666; margin-bottom: 1rem; line-height: 1.7; }
+    /* NAVIGATION */
+    nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg-white);
+      z-index: 100;
+    }
     
-    .hero { background: #f9f9f9; text-align: center; padding: 5rem 0; }
-    .hero h1 { color: #1a1a1a; margin-bottom: 1.5rem; }
-    .hero p { font-size: 18px; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     
-    .cta-btn {
-      background: #1a1a1a;
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    
+    nav .cta {
+      background: var(--primary);
       color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
       border: none;
+    }
+    
+    nav .cta:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    }
+    
+    /* HERO */
+    .hero {
+      padding: 6rem 0 8rem;
+      background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+    
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+    }
+    
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
       padding: 1rem 2rem;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(59, 130, 246, 0.25);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
-      display: inline-block;
+      transition: all 0.3s;
     }
     
-    .cta-btn:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
+    .btn-secondary:hover {
+      border-color: var(--text-primary);
+      background: var(--bg-light);
     }
     
-    .problem-section { background: transparent; }
+    /* STATS */
+    .stats {
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-light);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    /* PROBLEMS SECTION */
+    .problems {
+      padding: 6rem 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+    
+    .section-header p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
     
     .comparison {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      margin: 2rem 0;
+      margin-bottom: 3rem;
     }
     
     .comparison-card {
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 1.5rem;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-white);
+      transition: all 0.3s;
+    }
+    
+    .comparison-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.08);
+    }
+    
+    .comparison-card.bad {
+      border-left: 3px solid #ef4444;
+    }
+    
+    .comparison-card.good {
+      border-left: 3px solid #10b981;
     }
     
     .comparison-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 1rem;
     }
     
-    .bad { color: #e53e3e; }
-    .good { color: #22863a; }
+    .comparison-card.bad h3 { color: #ef4444; }
+    .comparison-card.good h3 { color: #10b981; }
     
     .comparison-card ul {
       list-style: none;
-      font-size: 13px;
     }
     
     .comparison-card li {
-      padding: 0.5rem 0;
+      padding: 0.75rem 0;
+      font-size: 14px;
+      line-height: 1.6;
       display: flex;
+      gap: 10px;
       align-items: flex-start;
-      gap: 8px;
     }
     
-    .file-modified {
-      color: #666;
-      font-size: 12px;
+    .comparison-card li strong {
+      font-weight: 600;
     }
     
-    .file-size {
-      color: #666;
-      font-size: 12px;
-      text-align: right;
+    /* FEATURES */
+    .features {
+      padding: 6rem 0;
+      background: var(--bg-light);
     }
     
     .features-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin: 2rem 0;
+      gap: 2rem;
     }
     
-    .feature-card {
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-    
-    .feature-card h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 0.5rem;
-    }
-    
-    .feature-card p {
-      font-size: 13px;
-      margin-bottom: 0;
-    }
-    
-    .roi-calculator {
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
+    .feature-item {
       padding: 2rem;
-      margin: 2rem 0;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      background: var(--bg-white);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
     }
+    
+    .feature-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+    
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    
+    .feature-item p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* ROI SECTION */
+    .roi-section {
+      padding: 6rem 0;
+    }
+    
+    .roi-container {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 3rem;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .roi-container .section-header {
+      color: white;
+      margin-bottom: 2rem;
+    }
+    
+    .roi-container .section-header h2 { color: white; }
+    .roi-container .section-header p { color: rgba(255,255,255,0.8); }
     
     .calc-row {
       margin-bottom: 1.5rem;
@@ -141,270 +348,345 @@
       display: block;
       font-size: 13px;
       font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #1a1a1a;
+      margin-bottom: 0.75rem;
+      opacity: 0.9;
     }
     
     .calc-row input {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: white;
       font-size: 14px;
+      font-family: 'Sohne', sans-serif;
+    }
+    
+    .calc-row input::placeholder {
+      color: rgba(255,255,255,0.5);
     }
     
     .calc-result {
-      background: #e6f1fb;
-      border: 1px solid #85b7eb;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 1.5rem;
       text-align: center;
+      margin-top: 2rem;
     }
     
     .calc-result-label {
-      font-size: 12px;
-      color: #666;
+      font-size: 13px;
+      opacity: 0.9;
       margin-bottom: 0.5rem;
     }
     
     .calc-result-value {
-      font-size: 24px;
-      font-weight: 500;
-      color: #0c447c;
-    }
-    
-    .beta-section {
-      background: #f9f9f9;
-      text-align: center;
-      padding: 4rem 0;
-    }
-    
-    .beta-form {
-      max-width: 400px;
-      margin: 2rem auto 0;
-      background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 12px;
-      padding: 2rem;
-    }
-    
-    .beta-form input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 14px;
-    }
-    
-    .beta-form button {
-      width: 100%;
-      background: #1a1a1a;
-      color: white;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .beta-form button:hover {
-      opacity: 0.9;
-    }
-    
-    .beta-hint {
-      font-size: 12px;
-      color: #666;
-      margin-top: 1rem;
-    }
-    
-    .footer {
-      background: #f9f9f9;
-      text-align: center;
-      padding: 2rem 0;
-      font-size: 12px;
-      color: #666;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #60a5fa;
     }
     
     .stat-box {
-      background: #e6f1fb;
-      color: #0c447c;
-      padding: 1rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 8px;
-      margin: 1rem 0;
+      padding: 1rem;
       text-align: center;
+      margin-top: 1rem;
     }
     
     .stat-number {
-      font-size: 24px;
-      font-weight: 500;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #60a5fa;
     }
     
     .stat-label {
       font-size: 12px;
+      opacity: 0.8;
       margin-top: 0.5rem;
+    }
+    
+    /* BETA SECTION */
+    .beta-section {
+      padding: 6rem 0;
+    }
+    
+    .beta-form {
+      max-width: 500px;
+      margin: 3rem auto 0;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+    
+    .beta-form input {
+      width: 100%;
+      padding: 0.875rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-size: 14px;
+      font-family: 'Sohne', sans-serif;
+      transition: all 0.3s;
+    }
+    
+    .beta-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .beta-form button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: 'Sohne', sans-serif;
+    }
+    
+    .beta-form button:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+    }
+    
+    .beta-hint {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      text-align: center;
     }
     
     .success-message {
       display: none;
-      background: #f0f9ff;
-      border: 1px solid #22863a;
-      border-radius: 8px;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      border-radius: 6px;
       padding: 1rem;
       margin-bottom: 1rem;
-      color: #22863a;
+      color: #047857;
       text-align: center;
+      font-size: 14px;
+      font-weight: 500;
     }
     
-    @media (max-width: 700px) {
+    /* FOOTER */
+    footer {
+      background: var(--primary);
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    footer p {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      .section-header h2 { font-size: 32px; }
+      .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
       .comparison { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 32px; }
-      h2 { font-size: 22px; }
+      .hero::before { display: none; }
     }
   </style>
 </head>
 <body>
 
+<!-- NAVIGATION -->
+<nav>
+  <div class="container">
+    <div class="logo">CloudDrive</div>
+    <button class="cta" onclick="document.querySelector('.beta-section').scrollIntoView({behavior:'smooth'})">Request Beta</button>
+  </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <h1>CloudDrive for SharePoint</h1>
-    <p>Stop overpaying for Salesforce File Storage. Keep documents on SharePoint, access them in Salesforce, leverage Agentforce to manage them.</p>
-    <button class="cta-btn" onclick="document.querySelector('.beta-section').scrollIntoView({behavior:'smooth'})">
-      Request Beta Access →
-    </button>
+    <div class="hero-content">
+      <h1>Stop paying for storage you don't need</h1>
+      <p class="hero-subtitle">CloudDrive keeps your documents on SharePoint while giving your team seamless access in Salesforce. Save €5,000–15,000 annually.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.querySelector('.beta-section').scrollIntoView({behavior:'smooth'})">Get Early Access</button>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="problem-section">
+<!-- STATS -->
+<section class="stats">
   <div class="container">
-    <h2>The problem: Salesforce Files ≠ Cloud Storage</h2>
-    <p style="text-align: center; color: #666; margin-bottom: 2rem;">
-      You're bleeding money on Salesforce File Storage and your IT team hates that documents live in two places.
-    </p>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">€15K</div>
+        <div class="stat-label">Typical annual savings</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">2.4mo</div>
+        <div class="stat-label">ROI payback period</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">0 days</div>
+        <div class="stat-label">Setup time required</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems">
+  <div class="container">
+    <div class="section-header">
+      <h2>The real problem</h2>
+      <p>You're spending thousands on Salesforce File Storage while your IT team demands data lives on SharePoint. There's a better way.</p>
+    </div>
     
     <div class="comparison">
-      <div class="comparison-card">
-        <h3 class="bad">✗ Without CloudDrive</h3>
+      <div class="comparison-card bad">
+        <h3>✗ Without CloudDrive</h3>
         <ul>
-          <li><span class="bad">✗</span> Files copy themselves into Salesforce</li>
-          <li><span class="bad">✗</span> Extra €5,000–15,000 File Storage bills</li>
-          <li><span class="bad">✗</span> Data lives in two places (compliance risk)</li>
-          <li><span class="bad">✗</span> Files Connect is too expensive or complex</li>
-          <li><span class="bad">✗</span> Agents can't organize documents automatically</li>
+          <li><strong>Extra €5–15K/year</strong> on File Storage</li>
+          <li><strong>Data fragmentation</strong> across two systems</li>
+          <li><strong>Compliance risk</strong> from duplicated data</li>
+          <li><strong>Complex setup</strong> with Files Connect</li>
+          <li><strong>No automation</strong> for document management</li>
         </ul>
       </div>
       
-      <div class="comparison-card">
-        <h3 class="good">✓ With CloudDrive</h3>
+      <div class="comparison-card good">
+        <h3>✓ With CloudDrive</h3>
         <ul>
-          <li><span class="good">✓</span> Drag & drop to SharePoint, zero Salesforce storage</li>
-          <li><span class="good">✓</span> Save €5,000–15,000/year</li>
-          <li><span class="good">✓</span> Single source of truth (SharePoint)</li>
-          <li><span class="good">✓</span> 5-minute setup, zero complexity</li>
-          <li><span class="good">✓</span> Agentforce automates folder organization</li>
+          <li><strong>Zero Salesforce storage</strong> consumed</li>
+          <li><strong>Single source of truth</strong> on SharePoint</li>
+          <li><strong>Full compliance</strong> with data governance</li>
+          <li><strong>5-minute setup</strong> for your org</li>
+          <li><strong>Agentforce integration</strong> for automation</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<!-- FEATURES -->
+<section class="features">
   <div class="container">
-    <h2>How it works</h2>
-    <p style="text-align: center; margin-bottom: 2rem;">
-      Instead of files living in Salesforce, they live on your company's SharePoint. CloudDrive is the bridge.
-    </p>
+    <div class="section-header">
+      <h2>How it works</h2>
+      <p>CloudDrive bridges Salesforce and SharePoint with a seamless, invisible layer. Your team sees files in Salesforce. They live on SharePoint.</p>
+    </div>
     
     <div class="features-grid">
-      <div class="feature-card">
-        <h3>☁️ Drag & Drop Upload</h3>
-        <p>Users drag files directly to SharePoint. Salesforce only stores the link.</p>
+      <div class="feature-item">
+        <div class="feature-icon">☁️</div>
+        <h3>Drag & Drop Upload</h3>
+        <p>Files go directly to SharePoint. Salesforce only stores a link. Zero storage consumed.</p>
       </div>
       
-      <div class="feature-card">
-        <h3>📁 Auto Folder Structure</h3>
-        <p>Folders auto-create on SharePoint based on record type: Account → Opportunity → Documents.</p>
+      <div class="feature-item">
+        <div class="feature-icon">📁</div>
+        <h3>Auto Folder Structure</h3>
+        <p>Folders auto-create based on your records. Account → Opportunity → Documents, automatically.</p>
       </div>
       
-      <div class="feature-card">
-        <h3>🤖 Agentforce Actions</h3>
-        <p>Tell your agent: "Organize invoices into the customer folder." It does it automatically.</p>
+      <div class="feature-item">
+        <div class="feature-icon">🔗</div>
+        <h3>One-Click Access</h3>
+        <p>Files appear in Salesforce like they always did. Click to open in SharePoint. No downloads.</p>
       </div>
       
-      <div class="feature-card">
-        <h3>🔗 One-Click Links</h3>
-        <p>Files show in Salesforce. Click = opens in SharePoint. No download needed.</p>
+      <div class="feature-item">
+        <div class="feature-icon">🤖</div>
+        <h3>Agentforce Ready</h3>
+        <p>Your agents can organize documents, manage folders, and archive files automatically.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<!-- ROI CALCULATOR -->
+<section class="roi-section">
   <div class="container">
-    <h2>Your ROI: How much can you save?</h2>
-    <p style="text-align: center; margin-bottom: 2rem;">
-      Use the calculator below. Typical savings: €4,000–12,000 per year.
-    </p>
-    
-    <div class="roi-calculator">
+    <div class="roi-container">
+      <div class="section-header">
+        <h2>Calculate your savings</h2>
+        <p>See how much CloudDrive can save your organization.</p>
+      </div>
+      
       <div class="calc-row">
-        <label>How many users in Salesforce?</label>
+        <label>Salesforce users in your org</label>
         <input type="number" id="users" value="500" min="10" max="10000" step="10">
       </div>
       
       <div class="calc-row">
-        <label>Avg. GB per user per year?</label>
+        <label>Average GB per user per year</label>
         <input type="number" id="gb-per-user" value="5" min="1" max="100" step="0.5">
       </div>
       
       <div class="calc-row">
-        <label>Salesforce storage cost/GB/year (€)</label>
+        <label>Your File Storage cost per GB (€)</label>
         <input type="number" id="cost-per-gb" value="8" min="1" max="50" step="0.5">
       </div>
       
       <div class="calc-result">
-        <div class="calc-result-label">Annual savings with CloudDrive</div>
+        <div class="calc-result-label">Your annual savings</div>
         <div class="calc-result-value" id="savings">€20,000</div>
-      </div>
-      
-      <div class="stat-box">
-        <div class="stat-number" id="payback">2.4 months</div>
-        <div class="stat-label">ROI payback period</div>
+        <div class="stat-box">
+          <div class="stat-number" id="payback">2.4</div>
+          <div class="stat-label">months to break even</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- BETA SECTION -->
 <section class="beta-section">
   <div class="container">
-    <h2>Ready to cut storage costs?</h2>
-    <p>Join the beta. We'll set you up, handle the integration, and you'll see savings within the first month.</p>
+    <div class="section-header">
+      <h2>Join the beta program</h2>
+      <p>Get early access to CloudDrive. We'll handle the setup and support your team through the first month.</p>
+    </div>
     
     <div class="beta-form">
       <div class="success-message" id="successMessage">
-        ✓ Thanks! We'll send you beta access details to your email.
+        ✓ Thank you! Check your email for beta access details.
       </div>
-      <input type="text" id="beta-name" placeholder="Your name">
-      <input type="email" id="beta-email" placeholder="Work email">
-      <input type="text" id="beta-company" placeholder="Company name">
-      <button onclick="submitBeta()">
-        📧 Get Early Access
-      </button>
+      <input type="text" id="beta-name" placeholder="Your full name" required>
+      <input type="email" id="beta-email" placeholder="Work email address" required>
+      <input type="text" id="beta-company" placeholder="Company name" required>
+      <button onclick="submitBeta()">Get Early Access</button>
       <div class="beta-hint">
-        We'll send you a demo link and beta access code. No credit card needed.
+        No credit card required. We'll email you a demo link and setup guide within 24 hours.
       </div>
     </div>
   </div>
 </section>
 
-<section class="footer">
+<!-- FOOTER -->
+<footer>
   <div class="container">
-    <p style="margin-bottom: 0.5rem;">CloudDrive for SharePoint — A Salesforce AppExchange Solution</p>
-    <p style="margin-bottom: 0;">Built for modern enterprises. Privacy-first. GDPR compliant.</p>
+    <p>CloudDrive for SharePoint</p>
+    <p>A Salesforce AppExchange Solution for modern enterprises</p>
   </div>
-</section>
+</footer>
 
 <script>
   function calculateROI() {
@@ -415,11 +697,11 @@
     const totalGB = users * gbPerUser;
     const annualCost = totalGB * costPerGB;
     const appCost = 2000;
-    const netSavings = annualCost - appCost;
-    const paybackMonths = (appCost / (annualCost / 12)).toFixed(1);
+    const netSavings = Math.max(0, annualCost - appCost);
+    const paybackMonths = annualCost > 0 ? (appCost / (annualCost / 12)).toFixed(1) : 0;
     
     document.getElementById('savings').textContent = '€' + Math.round(netSavings).toLocaleString();
-    document.getElementById('payback').textContent = paybackMonths + ' months';
+    document.getElementById('payback').textContent = paybackMonths;
   }
   
   document.getElementById('users').addEventListener('input', calculateROI);
